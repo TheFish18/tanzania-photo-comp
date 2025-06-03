@@ -2,128 +2,71 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Family Photo Competition Ballot</title>
+  <title>Safari Photo Contest Winners</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px;
+    }
+    #countdown {
+      font-size: 2em;
+      margin-top: 20px;
+    }
+    #winners {
+      display: none;
+      font-size: 1.5em;
+      margin-top: 30px;
+    }
+  </style>
 </head>
 <body>
-  <h1>Family Photo Competition Ballot</h1>
-  <p>
-    Please consider the following when casting your vote:
-    <ul>
-      <li>Overall image and editing quality</li>
-      <li>How well the photo captures the spirit of the Tanzanian safari</li>
-      <li>Your personal enjoyment of the photo (wow factor)</li>
-    </ul>
-  </p>
 
-  <form action="https://formsubmit.co/joshfisher81@gmail.com" method="POST">
-    <label for="name">Your Name:</label><br>
-    <input type="text" id="name" name="voter_name" required><br><br>
+  <h1>Safari Photo Contest Winners</h1>
+  <div id="countdown">Revealing winners in: --:--:--</div>
 
-    <fieldset>
-      <legend><strong>Rate Each Photo:</strong></legend>
+  <div id="winners">
+    <p><strong>🏆 1st Place:</strong> Riley: <em>The Younger Sibling</em></p>
+    <p><strong>🥈 2nd Place:</strong> Allie: <em>A Patchwork of Tall Tales</em></p>
+    <p><strong>🥉 3rd Place:</strong> Camille: <em>Through the Looking Glass</em></p>
+  </div>
 
-      <!-- Repeat for each photo -->
-      <div>
-        <p><strong>Josh</strong> - "Family Time"</p>
-        <select name="Josh">
-          <option value="">Select rating</option>
-          <option>Excellent</option>
-          <option>Very Good</option>
-          <option>Good</option>
-          <option>Acceptable</option>
-          <option>Poor</option>
-          <option>Reject</option>
-        </select>
-      </div>
-      <div>
-        <p><strong>James</strong> - "The Stare of Happiness"</p>
-        <select name="James">
-          <option value="">Select rating</option>
-          <option>Excellent</option>
-          <option>Very Good</option>
-          <option>Good</option>
-          <option>Acceptable</option>
-          <option>Poor</option>
-          <option>Reject</option>
-        </select>
-      </div>
-      <div>
-        <p><strong>Otis</strong> - "Anonymous- 'Creeping Death'"</p>
-        <select name="Otis">
-          <option value="">Select rating</option>
-          <option>Excellent</option>
-          <option>Very Good</option>
-          <option>Good</option>
-          <option>Acceptable</option>
-          <option>Poor</option>
-          <option>Reject</option>
-        </select>
-      </div>
-      <div>
-        <p><strong>Davis</strong> - "Say Cheese :)"</p>
-        <select name="Davis">
-          <option value="">Select rating</option>
-          <option>Excellent</option>
-          <option>Very Good</option>
-          <option>Good</option>
-          <option>Acceptable</option>
-          <option>Poor</option>
-          <option>Reject</option>
-        </select>
-      </div>
-      <div>
-        <p><strong>Riley</strong> - "The Younger Sibling"</p>
-        <select name="Riley">
-          <option value="">Select rating</option>
-          <option>Excellent</option>
-          <option>Very Good</option>
-          <option>Good</option>
-          <option>Acceptable</option>
-          <option>Poor</option>
-          <option>Reject</option>
-        </select>
-      </div>
-      <div>
-        <p><strong>Caroline</strong> - "Forever Protector"</p>
-        <select name="Caroline">
-          <option value="">Select rating</option>
-          <option>Excellent</option>
-          <option>Very Good</option>
-          <option>Good</option>
-          <option>Acceptable</option>
-          <option>Poor</option>
-          <option>Reject</option>
-        </select>
-      </div>
-      <div>
-        <p><strong>Allie</strong> - "A Patchwork of Tall Tales"</p>
-        <select name="Allie">
-          <option value="">Select rating</option>
-          <option>Excellent</option>
-          <option>Very Good</option>
-          <option>Good</option>
-          <option>Acceptable</option>
-          <option>Poor</option>
-          <option>Reject</option>
-        </select>
-      </div>
-      <div>
-        <p><strong>Uma</strong> - "Through the Looking Glass"</p>
-        <select name="Uma">
-          <option value="">Select rating</option>
-          <option>Excellent</option>
-          <option>Very Good</option>
-          <option>Good</option>
-          <option>Acceptable</option>
-          <option>Poor</option>
-          <option>Reject</option>
-        </select>
-      </div>
-    </fieldset>
+  <script>
+    // Set target to 9:00 PM Eastern Time TODAY
+    const now = new Date();
+    const targetTimeUTC = new Date(Date.UTC(
+      now.getUTCFullYear(),
+      now.getUTCMonth(),
+      now.getUTCDate(),
+      1,  // 9 PM Eastern = 1 AM UTC (next day)
+      0, 0, 0
+    ));
 
-    <br>
-    <button type="submit">Submit Ballot</button>
-  </form>
+    // If it's past 9 PM ET, push to tomorrow
+    if (now > targetTimeUTC) {
+      targetTimeUTC.setUTCDate(targetTimeUTC.getUTCDate() + 1);
+    }
+
+    function updateCountdown() {
+      const current = new Date();
+      const diff = targetTimeUTC - current;
+
+      if (diff <= 0) {
+        document.getElementById('countdown').style.display = 'none';
+        document.getElementById('winners').style.display = 'block';
+        clearInterval(timer);
+      } else {
+        const hours = String(Math.floor(diff / (1000 * 60 * 60))).padStart(2, '0');
+        const minutes = String(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+        const seconds = String(Math.floor((diff % (1000 * 60)) / 1000)).padStart(2, '0');
+        document.getElementById('countdown').textContent =
+          `Revealing winners in: ${hours}:${minutes}:${seconds}`;
+      }
+    }
+
+    const timer = setInterval(updateCountdown, 1000);
+    updateCountdown(); // Initial call
+  </script>
+
 </body>
 </html>
-
